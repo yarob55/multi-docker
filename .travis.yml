@@ -14,7 +14,7 @@ after_success:
   - docker build -t yarob50/multi-server -f ./server
   - docker build -t yarob50/multi-worker -f ./worker
   # LOG IN TO THE DOCKER HUB
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER_NAME" --passwrord-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER_NAME" --password-stdin
   # PUSH THE IMAGES TO YOUR ACCOUNT
   - docker push yarob50/multi-client
   - docker push yarob50/multi-nginx
