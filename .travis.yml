@@ -19,4 +19,5 @@ after_success:
   - docker push yarob50/multi-client
   - docker push yarob50/multi-nginx
   - docker push yarob50/multi-server
+  
   - docker push yarob50/multi-worker
