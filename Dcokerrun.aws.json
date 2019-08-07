@@ -1,0 +1,37 @@
+{
+	"AWSEBDockerVersion" : 2,
+	"containerDefinitions" : [
+		{
+			"name" : "client", 
+			"image": "yarob50/multi-client", 
+			"hostname": "client", 
+			"essential": false 
+		},
+		{
+			"name" : "server", 
+			"image": "yarob50/multi-server", 
+			"hostname": "api", 
+			"essential": false 
+		},
+		{
+			"name" : "worker", 
+			"image": "yarob50/multi-worker", 
+			"hostname": "worker", 
+			"essential": false 
+		},
+		{
+			"name" : "nginx", 
+			"image": "yarob50/multi-nginx", 
+			"hostname": "worker", 
+			"essential": true, 
+			"portMappings" : [
+				{
+					"hostPort":80,
+					"containerPort":80
+				}
+			],
+			"links" : ["client","server"] 
+
+		}
+	]
+}

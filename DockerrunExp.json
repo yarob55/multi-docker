@@ -1,0 +1,39 @@
+//this file is not a valid json nor js, it's only used to explain how to make the Dockerrun.aws.json file
+{
+	"AWSEBDockerVersion" : 2,
+	"containerDefinitions" : [
+		{
+			"name" : "client", //could be any thing, it's only the name that will be shown in the dashboard
+			"image": "yarob50/multi-client", //tha actual image name
+			"hostname": "client", //the name that will be used to reference the ip address of the client
+			"essential": false //if true, then all other stop when this container stops, NOTE: there should be on essential container at least
+		},
+		{
+			//NOTE: THERE IS NO NEDD FOR SETTING UP THE ENV VARIABLES FOR THIS CONTAINER, THEY WILL BE ACCESSIBLE IN THE AWS BY DEFAULT
+			"name" : "server", //could be any thing, it's only the name that will be shown in the dashboard
+			"image": "yarob50/multi-server", //tha actual image name
+			"hostname": "api", //the name that will be used to reference the ip address of the client
+			"essential": false //if true, then all other stop when this container stops, NOTE: there should be on essential container at least
+		},
+		{
+			"name" : "worker", //could be any thing, it's only the name that will be shown in the dashboard
+			"image": "yarob50/multi-worker", //tha actual image name
+			"hostname": "worker", //the name that will be used to reference the ip address of the client
+			"essential": false //if true, then all other stop when this container stops, NOTE: there should be on essential container at least
+		},
+		{
+			"name" : "nginx", //could be any thing, it's only the name that will be shown in the dashboard
+			"image": "yarob50/multi-nginx", //tha actual image name
+			"hostname": "worker", //not necessary in this case since no other container is using the hot name nginx 
+			"essential": true, //if true, then all other stop when this container stops, NOTE: there should be on essential container at least
+			"portMappings" : [
+				{
+					"hostPort":80,
+					"containerPort":80
+				}
+			],
+			"links" : ["client","server"] //since nginx is connecting to client (react app) and server (api) you should specify that nginx has the ability to reach to these two containers by providing their names (not the hostname)
+
+		},
+	]
+}

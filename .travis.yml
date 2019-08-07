@@ -21,3 +21,16 @@ after_success:
   - docker push yarob50/multi-server
 
   - docker push yarob50/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "node-docker"
+  env: "NodeDocker-env"
+  bucket_name: "elasticbeanstalk-us-east-2-925342842908"
+  bucket_path: "multi-docker"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY #should be added from iam service in aws and setup as env variable in travis
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
